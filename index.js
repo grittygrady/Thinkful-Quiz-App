@@ -64,6 +64,7 @@ function startQuiz() {
         console.log('startQuiz ran');
         $('.quizStart').hide();
         //SHOWS THE QUIZ FORM
+        renderQuestion();
         $('.questionAnswerForm').css('display', 'flex');
         //UPDATES CURRENT QUESTION NUMBER
         $('.questionNumber').text(1);
@@ -73,7 +74,7 @@ function startQuiz() {
 // WE NEED A FUNCTION TO GENERATE A FORM FOR THE QUIZ QUESTIONS AND ANSWERS FROM "STORE"
 function generateQuestion () {
     console.log(`generateQuestion ran`);
-    if (questionNumber < STORE.length) {
+    
         // RETURNS HTML TO INSERT INTO INDEX
         return `<div class="question-${questionNumber}">
         <h2>${STORE[questionNumber].question}</h2>
@@ -99,17 +100,18 @@ function generateQuestion () {
         </fieldset>
         </form>
         </div>`;
-    } else {
-        renderResults();
-        $('.questionNumber').text(5);
-    }
-}
+    } 
   
 // WE SHOULD HAVE A FUNCTION TO RENDER QUESTIONS (!!HELPER FUNCTION NEEDED!!)
 function renderQuestion() {
     console.log(`renderQuestion ran`);
     //UPDATES HTML WITH RESULTS OF "generateQuestion" FUNCTION
-    $('.questionAnswerForm').html(generateQuestion());
+    if (questionNumber < STORE.length) {
+        $('.questionAnswerForm').html(generateQuestion());
+    }   else {
+        $('.questionAnswerForm').html(renderResults());
+        $('.questionNumber').text(5);
+    }
 }
 
 
@@ -125,7 +127,7 @@ function changeQuestionNumber() {
 // WE SHOULD HAVE A BUTTON TO SUBMIT ANSWER (HELPER FUNCTIONS NEEDED TO UPDATE QUESTION AND SCORE)
 function userSelectAnswer() {
     $('form').on('submit', function (event){
-        event.preventDefault();
+        //event.preventDefault();
         console.log(`userSelectAnswer ran`);
         // SHORTHAND VARIABLES FOR CHECKING IF ANSWER IS CORRECT
         let selected = $('input:checked');
@@ -144,7 +146,7 @@ function userSelectAnswer() {
 // WE SHOULD HAVE FUNCTIONS TO DETERMINE BEHAVIOR ON CORRECT OR WRONG ANSWER
 function answerIsCorrect() {
     console.log('answerIsCorrect ran')
-    correctAnswerFeedBack();
+    $('.questionAnswerForm').html(correctAnswerFeedBack());
     updateScore();
 }
 
@@ -155,7 +157,7 @@ function updateScore() {
 
 function answerIsWrong() {
     console.log('answerIsWrong ran')
-    wrongAnswerFeedback();
+    $('.questionAnswerForm').html(wrongAnswerFeedback());
 }
 
 // WE SHOULD HAVE A WAY TO CHANGE SCORE ON CORRECT ANSWER
@@ -167,12 +169,12 @@ function changeScore() {
 //  ACTIONS ON CORRECT OR WRONG ANSWER
 function correctAnswerFeedBack() {
     //let rightAnswer = `${STORE[questionNumber].correctAnswer}`;
-    $('.questionAnswerForm').html(`<div class="correctFeedback"><h2>You know your punk! Rock on!</h2><button type="button" class="nextButton">Next</button></div>`);
+    return `<div class="correctFeedback"><h2>You know your punk! Rock on!</h2><button type="button" class="nextButton">Next</button></div>`;
 }
 
 function wrongAnswerFeedback() {
     let rightAnswer = `${STORE[questionNumber].correctAnswer}`;
-    $('.questionAnswerForm').html(`<div class="wrongFeedback"><h2>Sorry, the answer is <span>"${rightAnswer}"</span></h2><button type="button" class="nextButton">Next</button></div>`);
+    return `<div class="wrongFeedback"><h2>Sorry, the answer is <span>"${rightAnswer}"</span></h2><button type="button" class="nextButton">Next</button></div>`;
 }
 
 // WE SHOULD HAVE A FUNCTION TO DETERMINE WHAT HAPPENS WHEN THE USER CLICKS "NEXT"
@@ -190,11 +192,11 @@ function renderNextQuestion() {
 // WE SHOULD HAVE A FUNCTION TO GENERATE A RESULTS DISPLAY
 function renderResults() {
     if (score === 5) {
-        $('.questionAnswerForm').html(`<div class="results"><h2>You are truly punk and disorderly!</h2><button class="restart">Try Again</button></div>`)
+        return `<div class="results"><h2>You are truly punk and disorderly!</h2><button class="restart">Try Again</button></div>`;
     } else if (score < 5 && score > 2) {
-        $('.questionAnswerForm').html(`<div class="results"><h2>You're only a bit punk, but don't worry, you can still rock!</h2><button class="restart">Try Again</button></div>`)
+        return `<div class="results"><h2>You're only a bit punk, but don't worry, you can still rock!</h2><button class="restart">Try Again</button></div>`;
     } else {
-        $('.questionAnswerForm').html(`<div class="results"><h2>Sorry to interrupt your Steely Dan record. Better luck next time!</h2><button class="restart">Try Again</button></div>`)
+        return `<div class="results"><h2>Sorry to interrupt your Steely Dan record. Better luck next time!</h2><button class="restart">Try Again</button></div>`;
     }
 }
 
@@ -217,10 +219,11 @@ function resetStats() {
 
 function createQuiz () {
     startQuiz();
-    renderQuestion();
     userSelectAnswer();
     renderNextQuestion();
     restartQuiz();
+    // renderQuestion();
   }
   
   $(createQuiz);
+  
