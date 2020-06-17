@@ -104,7 +104,7 @@ function generateQuestion () {
         $('.questionNumber').text(5);
     }
 }
-
+  
 // WE SHOULD HAVE A FUNCTION TO RENDER QUESTIONS (!!HELPER FUNCTION NEEDED!!)
 function renderQuestion() {
     console.log(`renderQuestion ran`);
