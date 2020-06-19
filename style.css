@@ -106,7 +106,8 @@ form {
 form span {
   font-family: "Walter Turncoat", cursive;
   font-size: 1.5em;
-  padding-bottom: 17px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 fieldset {

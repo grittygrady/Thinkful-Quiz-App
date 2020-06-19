@@ -222,7 +222,7 @@ function createQuiz () {
     userSelectAnswer();
     renderNextQuestion();
     restartQuiz();
-    // renderQuestion();
+    //renderQuestion();
   }
   
   $(createQuiz);
