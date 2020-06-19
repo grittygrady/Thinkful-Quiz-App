@@ -126,7 +126,7 @@ function changeQuestionNumber() {
 
 // WE SHOULD HAVE A BUTTON TO SUBMIT ANSWER (HELPER FUNCTIONS NEEDED TO UPDATE QUESTION AND SCORE)
 function userSelectAnswer() {
-    $('form').on('submit', function (event){
+    $('main').on('submit', "form", function (event){
         event.preventDefault();
         console.log(`userSelectAnswer ran`);
         // SHORTHAND VARIABLES FOR CHECKING IF ANSWER IS CORRECT
@@ -222,7 +222,6 @@ function createQuiz () {
     userSelectAnswer();
     renderNextQuestion();
     restartQuiz();
-    //renderQuestion();
   }
   
   $(createQuiz);
