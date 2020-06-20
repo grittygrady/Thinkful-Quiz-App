@@ -121,12 +121,12 @@ function changeQuestionNumber() {
     console.log(`changeQuestionNumber ran`);
     questionNumber++;
     // UPDATES THE HTML
-    $('.questionNumber').text(questionNumber);
+    $('.questionNumber').text(questionNumber + 1);
 }
 
 // WE SHOULD HAVE A BUTTON TO SUBMIT ANSWER (HELPER FUNCTIONS NEEDED TO UPDATE QUESTION AND SCORE)
 function userSelectAnswer() {
-    $('main').on('submit', "form", function (event){
+    $('main').on('submit', 'form', function (event){
         event.preventDefault();
         console.log(`userSelectAnswer ran`);
         // SHORTHAND VARIABLES FOR CHECKING IF ANSWER IS CORRECT
@@ -184,7 +184,6 @@ function renderNextQuestion() {
         console.log(`renderNextQuestion ran`);
         changeQuestionNumber();
         renderQuestion();
-        userSelectAnswer();
     });
 }
 
